@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>react-hello-world</title>
+	<style>
+		.table{
+			border:#C8C8C8 solid;   
+			border-width:1px 0px 0px 1px; 
+			/*background: #F6F6F6;*/
+			background: #F3F0F0;
+			margin-top:25px;
+		}
+		
+		.td{
+			width:95px;
+			border:#C8C8C8 solid;   
+			border-width:0 1px 1px 0 ;
+		}
+		
+		.myspan{
+			margin-right:8px;
+		}
+		
+		body,html {
+	font-family: '微软雅黑';
+}
+
+.containerDiv{
+	padding:10px;
+	border:8px #9fe1ee solid;
+	border-radius:8px;
+	background-color:#eff;
+}
+
+#app{
+	width: 600px;
+	margin: 100px auto;
+	position:  relative;
+}
+
+/* header */
+.optHeader {
+	margin: 30px 0;
+}
+.headerTd {
+	width: 33%;
+	text-align: center;
+}
+.optHeader select {
+	width: 5em;
+}
+
+.itemPanel {
+	width: 100%;
+	border: 2px solid #b0c4de;
+	border-radius: 4px;
+	margin-bottom: 100px;
+}
+.itemTd {
+	width: 20%;
+	line-height: 1.5em;
+	text-align: center;
+}
+.itemBtn {
+	width: 3em;
+	font-size: 80%;
+	color: #1e90ff;
+	display: inline-block;
+}
+.tempEmpty {
+	line-height: 1.5em;
+	background: #dcdcdc;
+}
+
+/* addForm */
+.addForm label{
+	text-align: center;
+}
+.addForm input, .addForm select, .addForm textarea{
+	width: 200px;
+	margin: 0 auto 10px auto;
+	display: block;
+}
+.addForm button {
+	padding: 3px 20px;
+	background-color: #1e90ff;
+	color: white;
+	font-weight: bold;
+	border-radius: 4px;
+	margin: 5px auto;
+	display: block;
+}
+
+.tips {
+	display: none;
+	color: #708090;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.overLay {
+	text-align: center;
+	z-index: 100;
+    position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	padding-top: 50px;
+	background-color: rgba(255, 255, 255, 0);
+	animation-name: detailMerge;
+	animation-duration: 0.4s;
+	animation-fill-mode: forwards;
+}
+.overLay table {
+	width: 100%;
+}
+.overLay tr {
+	line-height: 1.5em;
+}
+.overLay th {
+	width: 40%;
+}
+.overLay td {
+	width: 60%;
+	text-align: center;
+}
+.overLay input, .overLay select, .overLay textarea {
+	width: 200px;
+}
+.overLay button {
+	padding: 3px 20px;
+	background-color: #1e90ff;
+	color: white;
+	font-weight: bold;
+	border-radius: 4px;
+	margin: 5px auto;
+	display: inline-block;
+}
+
+@keyframes detailMerge {
+	from {
+		background-color: rgba(255, 255, 255, 0);
+	}
+	to {
+		background-color: rgba(255, 255, 255, 0.7);
+	}
+}
+@-webkit-keyframes detailMerge {
+	from {
+		background-color: rgba(255, 255, 255, 0);
+	}
+	to {
+		background-color: rgba(255, 255, 255, 0.7);
+	}	
+}
+	</style>
+	<script src="react.js"></script>
+	<script src="react-dom.js"></script>
+	<script src="babel.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script type='text/babel'>
+	{/*function User(props)
+	{
+		return <h1>welcome back!</h1>
+	}
+	
+	function Guest(props)
+	{
+		return <h1>please sign up!</h1>
+	}
+	
+	function Greeting(props)
+	{
+		const islogin=props.islogin;
+		if(islogin)
+		{
+			return <User/>;
+		}
+		else{
+			return <Guest/>
+		}
+	}
+	
+	class LoginButton extends React.Component
+	{
+		constructor(props) {
+			super(props);
+        }
+		
+		render(){
+			return <button onClick={props.onClick}>Login</button>
+		}
+	}
+	
+	class LogoutButton extends React.Component
+	{
+		constructor(props) {
+			super(props);
+        }
+		
+		render(){
+			return <button onClick={props.onClick}>Logout</button>
+		}
+	}
+	
+	class LoginControl extends React.Component
+	{
+		constructor(props) {
+			super(props);
+			this.state={
+				islogin:false
+			}
+        }
+		
+		handleLoginClick(){
+			this.setState({
+				islogin:true
+			})
+		}
+		
+		handleLogoutClick(){
+			 this.setState({
+			   islogin:false
+			})
+		}
+		
+		
+		render(){
+			const islogin=this.state.islogin;
+			
+			let button=null;
+			if(islogin)
+			{
+				button=<LogoutButton onClick={()=>this.handleLogoutClick()}/>;
+			}
+			else{
+				button=<LoginButton onClick={()=>this.handleLoginClick()}>;
+			}
+			
+			return(
+				<div>
+					<User islogin={islogin}/>
+					{button}
+				</div>
+			)
+		}
+	}
+	
+	ReactDOM.render(
+		<LoginControl/>,
+		document.getElementById("app")
+	)
+	
+function UserGreeting(props) {
+  return <h1>Welcome back!</h1>;
+}
+
+function GuestGreeting(props) {
+  return <h1>Please sign up.</h1>;
+}
+
+function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
+}
+
+function LoginButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Login
+    </button>
+  );
+}
+
+function LogoutButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Logout
+    </button>
+  );
+}
+
+class LoginControl extends React.Component {
+  constructor() {
+    super();
+    this.state = {isLoggedIn: false};
+  }
+
+  handleLoginClick() {
+    this.setState({isLoggedIn: true});
+  }
+
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false});
+  }
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+
+    let button = null;
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={()=>this.handleLogoutClick()} />;
+    } else {
+      button = <LoginButton onClick={()=>this.handleLoginClick()} />;
+    }
+
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <LoginControl />,
+  document.getElementById('app')
+);
+
+function WarningBanner(props) {
+  if (!props.warn) {
+    return null;
+  }
+
+  return (
+    <div className="warning">
+      Warning!
+    </div>
+  );
+}
+
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {showWarning: true}
+
+  }
+
+  handleToggleClick() {
+    this.setState(prevState => {return {
+      showWarning: !prevState.showWarning
+    }},()=>console.log(`回调函数：${this.state.showWarning}`));
+	console.log(`调用后:${this.state.showWarning}`)
+  }
+
+  render() {
+    return (
+      <div>
+        <WarningBanner warn={this.state.showWarning} />
+        <button onClick={()=>{this.handleToggleClick()}}>
+          {this.state.showWarning ? 'Hide' : 'Show'}
+        </button>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Page />,
+  document.getElementById('app')
+);
+function BoilingVerdict(props) {
+  if (props.celsius >= 100) {
+    return <p>The water would boil.</p>;
+  }
+  return <p>The water would not boil.</p>;
+}
+
+function toCelsius(fahrenheit) {
+  return (fahrenheit - 32) * 5 / 9;
+}
+
+function toFahrenheit(celsius) {
+  return (celsius * 9 / 5) + 32;
+}
+
+function tryConvert(temperature, convert) {
+  const input = parseFloat(temperature);
+  if (Number.isNaN(input)) {
+    return '';
+  }
+  const output = convert(input);
+  const rounded = Math.round(output * 1000) / 1000;
+  return rounded.toString();
+}
+
+const scaleNames = {
+  c: 'Celsius',
+  f: 'Fahrenheit'
+};
+
+class TemperatureInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.props.onTemperatureChange(e.target.value);
+  }
+
+  render() {
+    const temperature = this.props.temperature;
+    const scale = this.props.scale;
+    return (
+      <fieldset>
+        <legend>Enter temperature in {scaleNames[scale]}:</legend>
+        <input value={temperature}
+               onChange={this.handleChange} />
+      </fieldset>
+    );
+  }
+}
+
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+    this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+    this.state = {temperature: '', scale: 'c'};
+  }
+
+  handleCelsiusChange(temperature) {
+    this.setState({scale: 'c', temperature});
+  }
+
+  handleFahrenheitChange(temperature) {
+    this.setState({scale: 'f', temperature});
+  }
+
+  render() {
+    const scale = this.state.scale;
+    const temperature = this.state.temperature;
+    const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+
+    return (
+      <div>
+        <TemperatureInput
+          scale="c"
+          temperature={celsius}
+          onTemperatureChange={this.handleCelsiusChange} />
+        <TemperatureInput
+          scale="f"
+          temperature={fahrenheit}
+          onTemperatureChange={this.handleFahrenheitChange} />
+        <BoilingVerdict
+          celsius={parseFloat(celsius)} />
+      </div>
+    );
+  }
+}
+ReactDOM.render(
+  <Calculator />,
+  document.getElementById('app')
+);
+
+class Child extends React.Component{
+	constructor(props){
+		super(props);
+	}
+    render(){
+        return (
+            <div>
+                请输入邮箱：<input  onChange={this.props.handleEmail}/>
+            </div>
+        )
+    }
+}
+
+
+//父组件，此处通过event.target.value获取子组件的值
+class Parent extends React.Component{
+	constructor(props){
+		super(props);
+		this.state={
+			email: ''
+		}
+	}
+    handleEmail(event){
+        this.setState({
+		email: event.target.value
+		});
+    }
+    render(){
+        return (
+            <div>
+                <div>用户邮箱：{this.state.email}</div>
+                <Child name="email" handleEmail={(e)=>{this.handleEmail(e)}}/>
+            </div>
+        )
+    }
+}
+ReactDOM.render(
+  <Parent />,
+  document.getElementById('app')
+);
+
+
+class Child extends React.Component{
+	constructor(props){
+		super(props);
+	}
+    render(){
+        return (
+            <div>
+                <input type="text" value={this.props.text} onChange={(e)=>{this.props.handleChange(e)}}/>
+            </div>
+        )
+    }
+}
+
+class Child2 extends React.Component{
+	constructor(props){
+		super(props);
+	}
+    render(){
+        return (
+            <div>
+                <button onClick={()=>{this.props.handleClick()}}>清除</button>
+            </div>
+        )
+    }
+}
+
+class Parent extends React.Component{
+	constructor(props){
+		super(props);
+		this.state={
+			text:"",
+		}
+	}
+    handleClick(){
+        this.setState({
+			text:""
+		});
+    }
+	
+	handleChange(e){
+		this.setState({
+			text:e.target.value
+		})
+	}
+	
+    render(){
+        return (
+            <div>
+                <Child  text={this.state.text} handleChange={(e)=>{this.handleChange(e)}}/>
+				<br/>
+                <Child2 handleClick={()=>{this.handleClick()}}/>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(
+  <Parent />,
+  document.getElementById('app')
+);
+
+{for(let i=0;i<length;i++)
+	{	
+		for(let j=i;j<length;j++)
+		{
+			if(sort==0)
+			{
+				if(this.props.products[i].price<this.props.products[j].price)
+				{
+					let tmpObj=this.props.products[i];
+					this.props.products[i]=this.props.products[j];
+					this.props.products[j]=tmpObj;
+					console.log(tmpObj);
+				}
+			}
+			else{
+				if(this.props.products[i].price>this.props.products[j].price)
+				{
+					let tmpObj=this.props.products[i];
+					this.props.products[i]=this.props.products[j];
+					this.props.products[j]=tmpObj;
+					console.log(tmpObj);
+				}
+			}
+		}
+	}
+
+*/}
+class ProductCategoryRow extends React.Component {
+  render() {
+    return <tr><th className="td" colSpan="2">{this.props.category}</th></tr>;
+  }
+}
+
+class ProductRow extends React.Component {
+  render() {
+	if(this.props.hasGoods==0)
+	{
+		return <tr><th className="td" colSpan="2" >No Goods</th></tr>
+	}
+    var name = this.props.product.stocked ?
+      this.props.product.name :
+      <span style={{color: 'red'}}>
+        {this.props.product.name}
+      </span>;
+    return (
+      <tr>
+        <td className="td">{name}</td>
+        <td className="td">{`$${this.props.product.price}`}</td>
+      </tr>
+    );
+  }
+}
+
+class ProductTable extends React.Component {
+  render() {
+    let rows = [];
+    let lastCategory = null;
+	let length=this.props.products.length;
+	let hasGoods=0;
+	let tmp=hasGoods;
+	
+    
+    this.props.products.forEach((product,i) => {
+	  const name=product.name.toLowerCase() 
+	  const filterText=this.props.filterText.toLowerCase();
+	  
+	 
+	  if(filterText!=="")
+	  {
+	  
+		if (name.substring(0,1)!=filterText.substring(0,1) || (!product.stocked && this.props.inStockOnly)) {
+				tmp=hasGoods;
+				hasGoods=0;
+				hasGoods|=tmp;
+				if( i == length-1 && 0==hasGoods )
+				{
+					rows.splice(0,length-1,<ProductRow product={0} key={`noGoods`} hasGoods={0} />);
+				}
+				return;
+		}
+		else{
+				tmp=hasGoods;
+				hasGoods=1;
+				hasGoods|=tmp;
+		}
+	  }
+	  else if((!product.stocked && this.props.inStockOnly)){
+				return;
+	  }
+	  
+	 
+       if (product.category !== lastCategory) {
+        rows.push(<ProductCategoryRow category={product.category} key={product.category} />);
+      }
+      rows.push(<ProductRow product={product} key={+new Date() + i} />);
+      lastCategory = product.category;
+	  
+    });
+    return (
+      <table className="table">
+        <thead>
+          <tr>
+            <th className="td">Name</th>
+            <th className="td">Price</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+    );
+  }
+}
+
+class SearchBar extends React.Component {
+  render() {
+    return (
+	<div>
+      <form>
+        <input 
+		type="text" 
+		placeholder="Search..." 
+		value={this.props.filterText} 
+		onChange={(e)=>this.props.handleFilterTextChange(e)}
+		/>
+        <p>
+          <input 
+		  type="checkbox" 
+		  checked={this.props.inStockOnly} 
+		  onChange={()=>this.props.handleInStockChange()}
+		  />
+          {' '}
+          Only show products in stock
+        </p>
+      </form>
+	</div>
+    );
+  }
+}
+
+class PriceSort extends React.Component{
+	constructor(props){
+	super(props);
+  }
+  
+  render(){
+	return(
+		<div>
+			<span className="myspan">价格排序</span>
+			<select value={this.props.Sort} onChange={(e)=>{this.props.handlePriceSortChange(e)}}>
+				<option value="0">低到高</option>
+				<option value="1">高到底</option>
+			</select>
+		</div>
+	)
+  }
+
+} 
+
+class AddGoods extends React.Component{
+	constructor(props){
+	super(props);
+  }
+  
+  render(){
+	return(
+		<button onClick={()=>{this.props.handleAddClick()}}>添加商品</button>
+	)
+  }
+}
+
+class AddModel extends React.Component{
+	constructor(props){
+	super(props);
+	this.state={
+		isAdd:this.props.isAdd,
+		products:this.props.products
+	}
+  }
+	
+	handleSubmitClick(e){
+		var newGoodObj={};
+		newGoodObj.category=this.refs.addCategory.value;
+		newGoodObj.name=this.refs.addName.value;
+		newGoodObj.price=this.refs.addPrice.value;
+		newGoodObj.stocked=this.refs.addStock.checked;
+	
+		this.state.products.push(newGoodObj);
+		this.props.handleCloseClick(e);
+		e.stopPropagation();
+	}
+	
+	
+	render(){
+		let isAdd = this.props.isAdd;  
+		if(!isAdd)
+        return null;
+		
+        return (
+          <div className="overLay">
+            <h4 style={{'textAlign':'center'}}>商品新增</h4>
+            <hr/>
+            <form ref='addForm' className="addForm">
+                <div>
+                  <label htmlFor='staffAddName' style={{'display': 'block'}}>种类</label>
+                  <input ref='addCategory' id='staffAddName' type='text' placeholder='Category'/>
+                </div>
+                <div>
+                  <label htmlFor='staffAddAge' style={{'display': 'block'}}>名称</label>
+                  <input ref='addName' id='staffAddAge' type='text' placeholder='Name'/>
+                </div>
+				<div>
+                  <label htmlFor='staffAddPrice' style={{'display': 'block'}}>价格($)</label>
+                  <input ref='addPrice' id='staffAddPrice' type='text' />
+                </div>
+				<div>
+                  <label htmlFor='staffAddPrice' style={{'display': 'block'}}>是否有库存</label>
+                  <input ref='addStock' id='staffAddPrice' type='checkbox' />
+                </div>
+                <div>
+                  <label htmlFor='staffAddDescrip' style={{'display': 'block'}}>商品描述</label>
+                  <textarea ref='addDescrip' id='staffAddDescrip' type='text'></textarea>
+                </div>
+                <p ref="tips" className='tips' >提交成功</p>
+                <p ref='tipsUnDone' className='tips'>请录入完整的人员信息</p>
+                <p ref='tipsUnAge' className='tips'>请录入正确的年龄</p>
+                <div>
+                  <button type="button" onClick={(e)=>{this.handleSubmitClick(e)}} >提交</button>
+				  <button type="button" onClick={(e)=>{this.props.handleCloseClick(e)}}>关闭</button>
+				  <button type="reset" >重置</button>
+                </div>
+            </form>
+          </div>
+        )
+    }
+}
+
+
+class FilterableProductTable extends React.Component {
+  constructor(props){
+	super(props);
+	this.state={
+		filterText:"",
+		inStockOnly:false,
+		Sort:0,
+		products:this.props.products,
+		isAdd:false
+	};
+  }
+  
+  handleFilterTextChange(e){
+	this.setState({
+		filterText:e.target.value
+	})
+  }
+  
+  handleInStockChange(){
+	this.setState((prevState)=>({
+		inStockOnly:!prevState.inStockOnly
+	}))
+  }
+  
+  handlePriceSortChange(e){
+	if(e.target.value==0)
+	{
+		for(var i=0;i<this.state.products.length;i++)
+		{
+			for(var j=i;j<this.state.products.length;j++)
+			{
+				if(this.state.products[i].price>this.state.products[j].price)
+				{
+					var tmp=this.state.products[i];
+					this.state.products[i]=this.state.products[j];
+					this.state.products[j]=tmp;
+				}
+			}
+		}
+	}
+	else{
+		for(var i=0;i<this.state.products.length;i++)
+		{
+			for(var j=i;j<this.state.products.length;j++)
+			{
+				if(this.state.products[i].price<this.state.products[j].price)
+				{
+					var tmp=this.state.products[i];
+					this.state.products[i]=this.state.products[j];
+					this.state.products[j]=tmp;
+				}
+			}
+		}
+	
+	}
+	this.setState({
+		Sort:e.target.value,
+	})
+  }
+  
+  handleAddClick(){
+	this.setState({
+		isAdd:true
+	})
+  }
+  
+  handleCloseClick(e){
+	this.setState({
+		isAdd:false
+	})
+	e.stopPropagation();
+  }
+  
+  render() {
+    return (
+      <div className="containerDiv">
+        <SearchBar 
+		 filterText={this.state.filterText}
+		 inStockOnly={this.state.inStockOnly}
+		 handleFilterTextChange={(e)=>this.handleFilterTextChange(e)}
+		 handleInStockChange={()=>this.handleInStockChange()}
+		/>
+		
+		<PriceSort
+		 Sort={this.state.Sort}
+		 handlePriceSortChange={(e)=>this.handlePriceSortChange(e)}
+		/>
+		
+		<AddGoods
+		 handleAddClick={()=>this.handleAddClick()}
+		/>
+        <ProductTable 
+		 products={this.props.products} 
+		 filterText={this.state.filterText}
+		 Sort={this.state.Sort}
+		 inStockOnly={this.state.inStockOnly}
+		/>
+		<AddModel
+		products={this.props.products}
+		isAdd={this.state.isAdd}
+		handleCloseClick={(e)=>this.handleCloseClick(e)}
+		/>
+      </div>
+    );
+  }
+}
+
+
+var products = [
+  {category: 'Electronics', price: 199.99, stocked: true, name: 'Nexus 7'},
+  {category: 'Sporting Goods', price: 49.99, stocked: true, name: 'Football'},
+  {category: 'Sporting Goods', price: 9.99, stocked: true, name: 'Baseball'},
+  {category: 'Sporting Goods', price: 29.99, stocked: false, name: 'Basketball'},
+  {category: 'Electronics', price: 99.99, stocked: true, name: 'iPod Touch'},
+  {category: 'Electronics', price: 399.99, stocked: false, name: 'iPhone 5'}
+];
+ 
+
+ReactDOM.render(
+  <FilterableProductTable products={products}/>,
+  document.getElementById('app')
+);
+
+
+{/*
+
+class NumberList extends React.Component {
+	constructor(props){
+		super(props);
+		this.state={
+			value:0,
+			product:this.props.product
+		}
+	}
+	
+	handleChange(e){
+		for(var i=0;i<this.state.product.length;i++)
+		{
+			for(var j=i;j<this.state.product.length;j++)
+			{
+				if(this.state.value==0)
+				{
+				if(product[i].price<product[j].price)
+				{
+					let tmp=product[i];
+					product[i]=product[j];
+					product[j]=tmp;
+				}
+				}
+				else{
+				if(product[i].price>product[j].price)
+				{
+					let tmp=product[i];
+					product[i]=product[j];
+					product[j]=tmp;
+				}	
+				}
+			}
+		}
+		this.setState({
+			value:e.target.value,
+			product:product
+		})
+	}
+	
+	componentDidMount(){
+		console.log("componentDidMount");
+	}
+	
+	handleClick(){
+		const obj={category: 'Sporting Goods', price: 43.99, stocked: true, name: 'Football2'}
+		product.splice(0,0,obj);
+		this.setState({
+			product:product
+		})
+	}
+	
+	render(){
+	let listItems = this.state.product.map((product,index) =>
+		<li key={index}>{`种类${product.category}  名称${product.name}   价格$${product.price}`}</li>
+	);
+	return (
+		<div>
+		<ul>{listItems}</ul>
+		<select onChange={(e)=>{this.handleChange(e)}} value={this.state.value}>
+			<option value="0">升序</option>
+			<option value="1">降序</option>
+		</select>
+		<button onClick={()=>{this.handleClick()}}>插入</button>
+		</div>
+	);
+  }
+}
+
+let numbers = [1, 2, 3, 4, 5];
+let product = [
+  {category: 'Sporting Goods', price: 49.99, stocked: true, name: 'Football'},
+  {category: 'Sporting Goods', price: 9.99, stocked: true, name: 'Baseball'},
+  {category: 'Sporting Goods', price: 29.99, stocked: false, name: 'Basketball'},
+  {category: 'Electronics', price: 99.99, stocked: true, name: 'iPod Touch'},
+  {category: 'Electronics', price: 399.99, stocked: false, name: 'iPhone 5'},
+  {category: 'Electronics', price: 199.99, stocked: true, name: 'Nexus 7'}
+];
+ReactDOM.render(
+  <NumberList product={product}/>,
+  document.getElementById('app')
+);
+
+ */}
+</script>
+</body>
+</html>
