@@ -4,23 +4,26 @@
 	<meta charset="UTF-8">
 	<title>react-hello-world</title>
 	<style>
-		.table{
-			border:#C8C8C8 solid;   
-			border-width:1px 0px 0px 1px; 
-			/*background: #F6F6F6;*/
-			background: #F3F0F0;
-			margin-top:25px;
-		}
+.table{
+	border:#C8C8C8 solid;   
+	border-width:1px 0px 0px 1px; 
+	background: #F3F0F0;
+	margin-top:25px;
+}
 		
-		.td{
-			width:95px;
-			border:#C8C8C8 solid;   
-			border-width:0 1px 1px 0 ;
-		}
+.td{
+	width:95px;
+	border:#C8C8C8 solid;   
+	border-width:0 1px 1px 0 ;
+}
+	
+.table tr:hover{
+		background-color:#e4e4e4;
+}
 		
 .myspan{
 	margin-right:8px;
-		}
+}
 		
 body,html {
 	font-family: '微软雅黑';
@@ -67,6 +70,10 @@ body,html {
 	font-size: 80%;
 	color: #1e90ff;
 	display: inline-block;
+}
+
+.itemBtn:hover{
+	cursor:pointer;
 }
 .tempEmpty {
 	line-height: 1.5em;
@@ -171,6 +178,10 @@ class ProductCategoryRow extends React.Component {
 }
 
 class ProductRow extends React.Component {
+	constructor(props){
+		super(props);
+	}
+
   render() {
 	if(this.props.hasGoods==0)
 	{
@@ -186,6 +197,10 @@ class ProductRow extends React.Component {
         <td className="td">{name}</td>
         <td className="td">{`$${this.props.product.price}`}</td>
 		<td className="td">{this.props.product.category}</td>
+		<td className="td">
+			<a className="itemBtn" onClick={(e)=>{this.props.handlerDelete(e)}} name={this.props.product.name}>删除</a>
+			<a className="itemBtn" onClick={(e)=>{this.props.handlerDetail(e)}} name={this.props.product.name}>详情</a>
+		</td>
       </tr>
     );
   }
@@ -254,7 +269,7 @@ class ProductTable extends React.Component {
         //rows.push(<ProductCategoryRow category={product.category} key={product.category} />);
       }
       //rows.push(<ProductRow product={product} key={+new Date() + i} />);
-	  rows.push(<ProductRow product={product} key={product.name} />);
+	  rows.push(<ProductRow product={product} key={product.name} handlerDetail={(e)=>{this.props.handlerDetail(e)}} handlerDelete={(e)=>this.props.handlerDelete(e)}/>);
 	  
 	  last=product.category
 	  categoryArray.push(product.category);
@@ -267,6 +282,7 @@ class ProductTable extends React.Component {
             <th className="td">Name</th>
             <th className="td">Price</th>
 			<th className="td">Category</th>
+			<td className="td">Operation</td>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -397,6 +413,93 @@ class AddModel extends React.Component{
     }
 }
 
+class ModifyModel extends React.Component{
+	constructor(props){
+	super(props);
+	this.state={
+		isModify:this.props.isModify,
+		products:this.props.products
+	}
+  }
+	
+	handleSubmitClick(e){
+		var newGoodObj={};
+		newGoodObj.category=this.refs.modifyCategory.value;
+		newGoodObj.name=this.refs.modifyName.value;
+		newGoodObj.price=this.refs.modifyPrice.value;
+		newGoodObj.stocked=this.refs.modifyStock.checked;
+		let index=null;
+		
+		this.state.products.filter((product,i)=>{
+			 if(product.name==this.props.modifyKey)
+				{
+					index=i;
+					return
+				}
+		 })
+		this.state.products.splice(index,1,newGoodObj);
+		this.setState({
+			products:this.state.products
+		})
+		this.props.handleCloseClick(e);
+		e.stopPropagation();
+	}
+	
+	handleResetClick(){
+		this.refs.modifyCategory.value=this.refs.modifyCategory.defaultValue;
+		this.refs.modifyName.value=this.refs.modifyName.defaultValue
+		this.refs.modifyPrice.value=this.refs.modifyPrice.defaultValue
+		this.refs.modifyStock.checked=this.refs.modifyStock.defaultChecked
+	}
+	
+	render(){
+		let isModify = this.props.isModify;  
+		if(!isModify)
+        return null;
+		
+		let modifyProduct=this.state.products.filter(product=>{
+			return product.name==this.props.modifyKey
+		 }	
+		)
+		
+        return (
+          <div className="overLay">
+            <h4 style={{'textAlign':'center'}}>商品修改</h4>
+            <hr/>
+            <form ref='modifyForm' className="addForm">
+                <div>
+                  <label htmlFor='staffAdName' style={{'display': 'block'}}>种类</label>
+                  <input ref='modifyCategory' id='staffAddName' type='text' defaultValue={modifyProduct[0].category}/>
+                </div>
+                <div>
+                  <label htmlFor='staffAddAge' style={{'display': 'block'}}>名称</label>
+                  <input ref='modifyName' id='staffAddAge' type='text' defaultValue={modifyProduct[0].name}/>
+                </div>
+				<div>
+                  <label htmlFor='staffAddPrice' style={{'display': 'block'}}>价格($)</label>
+                  <input ref='modifyPrice' id='staffAddPrice' type='text' defaultValue={modifyProduct[0].price}/>
+                </div>
+				<div>
+                  <label htmlFor='staffAddPrice' style={{'display': 'block'}}>是否有库存</label>
+                  <input ref='modifyStock' id='staffAddPrice' type='checkbox' defaultChecked={modifyProduct[0].stocked}/>
+                </div>
+                <div>
+                  <label htmlFor='staffAddDescrip' style={{'display': 'block'}}>商品描述</label>
+                  <textarea ref='modifyDescrip' id='staffAddDescrip' type='text'></textarea>
+                </div>
+                <p ref="tips" className='tips' >提交成功</p>
+                <p ref='tipsUnDone' className='tips'>请录入完整的人员信息</p>
+                <p ref='tipsUnAge' className='tips'>请录入正确的年龄</p>
+                <div>
+                  <button type="button" onClick={(e)=>{this.handleSubmitClick(e)}} >提交</button>
+				  <button type="button" onClick={(e)=>{this.props.handleCloseClick(e)}}>关闭</button>
+				  <button type="button" onClick={(e)=>{this.handleResetClick(e)}}>重置</button>
+                </div>
+            </form>
+          </div>
+        )
+    }
+}
 
 class FilterableProductTable extends React.Component {
   constructor(props){
@@ -406,7 +509,9 @@ class FilterableProductTable extends React.Component {
 		inStockOnly:false,
 		Sort:0,
 		products:this.props.products,
-		isAdd:false
+		isAdd:false,
+		isModify:false,
+		modifyKey:null
 	};
   }
   
@@ -465,11 +570,39 @@ class FilterableProductTable extends React.Component {
   }
   
   handleCloseClick(e){
+	if(this.state.isAdd)
+	{
 	this.setState({
 		isAdd:false
 	})
+	}
+	else if(this.state.isModify)
+	{
+	this.setState({
+		isModify:false
+	})
+	}
 	e.stopPropagation();
   }
+  
+  handlerDelete(e){
+	   var key=e.target.name;
+	   let newproducts = this.state.products.filter(product=>{
+			return product.name!=key
+	   })
+	   this.setState({
+			products:newproducts
+	   })
+	}
+	
+  handlerDetail(e){
+		var key=e.target.name;
+		this.setState({
+			isModify:true,
+			modifyKey:key
+	})
+	}
+
   
   render() {
     return (
@@ -490,15 +623,23 @@ class FilterableProductTable extends React.Component {
 		 handleAddClick={()=>this.handleAddClick()}
 		/>
         <ProductTable 
-		 products={this.props.products} 
+		 products={this.state.products} 
 		 filterText={this.state.filterText}
 		 Sort={this.state.Sort}
 		 inStockOnly={this.state.inStockOnly}
+		 handlerDelete={(e)=>this.handlerDelete(e)}
+		 handlerDetail={(e)=>this.handlerDetail(e)}
 		/>
 		<AddModel
-		products={this.props.products}
+		products={this.state.products}
 		isAdd={this.state.isAdd}
 		handleCloseClick={(e)=>this.handleCloseClick(e)}
+		/>
+		<ModifyModel
+		products={this.state.products}
+		isModify={this.state.isModify}
+		handleCloseClick={(e)=>this.handleCloseClick(e)}
+		modifyKey={this.state.modifyKey}
 		/>
       </div>
     );
@@ -510,7 +651,7 @@ var products = [
   {category: 'Electronics', price: 199.99, stocked: true, name: 'Nexus 7'},
   {category: 'Sporting Goods', price: 49.99, stocked: true, name: 'Football'},
   {category: 'Sporting Goods', price: 9.99, stocked: true, name: 'Baseball'},
-  {category: 'Sporting Goods', price: 29.99, stocked: false, name: 'Basketball'},
+  {category: 'Sporting Goods', price: 29.99, stocked: true, name: 'Basketball'},
   {category: 'Electronics', price: 99.99, stocked: true, name: 'iPod Touch'},
   {category: 'Electronics', price: 399.99, stocked: false, name: 'iPhone 5'}
 ];
