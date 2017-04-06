@@ -9,7 +9,16 @@ class ProductRow extends React.Component {
 	  if (this.props.hasGoods !== nextProps.hasGoods) {
 		return true;
 		}
-	if (this.props.product !== nextProps.product) {
+	  if (this.props.product !== nextProps.product) {
+		return true;
+		}
+	  if (this.props.currentPage !== nextProps.currentPage) {
+		return true;
+		}
+	  if (this.props.Sort !== nextProps.Sort) {
+		return true;
+		}
+	  if (this.props.index !== nextProps.index) {
 		return true;
 		}
 	  return false;
@@ -17,6 +26,7 @@ class ProductRow extends React.Component {
 	
     render() {
 	console.log("ProductRow render");
+	let display="";
 	if(this.props.hasGoods==0)
 	{
 		return <tr><th className="td" colSpan="4" >No Goods</th></tr>
@@ -26,8 +36,13 @@ class ProductRow extends React.Component {
       <span style={{color: 'red'}}>
         {this.props.product.name}
       </span>;
+	
+		//if(this.props.index<this.props.pageStart||this.props.index>this.props.pageStop){
+		if(this.props.index<this.props.currentPage*this.props.eachPage||this.props.index>(this.props.currentPage+1)*this.props.eachPage-1){
+			display="none";
+		}
     return (
-      <tr>
+      <tr style={{display:display}}>
         <td className="td">{name}</td>
         <td className="td">{`$${this.props.product.price}`}</td>
 		<td className="td">{this.props.product.category}</td>

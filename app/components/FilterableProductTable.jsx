@@ -17,7 +17,9 @@ class FilterableProductTable extends React.Component {
 		products:this.props.products,
 		isAdd:false,
 		isModify:false,
-		modifyKey:null
+		modifyKey:null,
+		currentPage:0,
+		eachPage:4
 	};
   }
   
@@ -77,30 +79,31 @@ class FilterableProductTable extends React.Component {
   }
   
   handleCloseClick(e){
+	let newproducts=this.props.products;
 	if(this.state.Sort==0){
-		for(var i=0;i<this.state.products.length;i++)
+		for(var i=0;i<newproducts.length;i++)
 		{
-			for(var j=i;j<this.state.products.length;j++)
+			for(var j=i;j<newproducts.length;j++)
 			{
-				if(this.state.products[i].price>this.state.products[j].price)
+				if(newproducts[i].price>newproducts[j].price)
 				{
-					var tmp=this.state.products[i];
-					this.state.products[i]=this.state.products[j];
-					this.state.products[j]=tmp;
+					var tmp=newproducts[i];
+					newproducts[i]=newproducts[j];
+					newproducts[j]=tmp;
 				}
 			}
 		}
 	}
 	else{
-		for(var i=0;i<this.state.products.length;i++)
+		for(var i=0;i<newproducts.length;i++)
 		{
-			for(var j=i;j<this.state.products.length;j++)
+			for(var j=i;j<newproducts.length;j++)
 			{
-				if(this.state.products[i].price<this.state.products[j].price)
+				if(newproducts[i].price<newproducts[j].price)
 				{
-					var tmp=this.state.products[i];
-					this.state.products[i]=this.state.products[j];
-					this.state.products[j]=tmp;
+					var tmp=newproducts[i];
+					newproducts[i]=newproducts[j];
+					newproducts[j]=tmp;
 				}
 			}
 		}
@@ -109,14 +112,14 @@ class FilterableProductTable extends React.Component {
 	{
 	this.setState({
 		isAdd:false,
-		products:this.state.products
+		products:newproducts
 	})
 	}
 	else if(this.state.isModify)
 	{
 	this.setState({
 		isModify:false,
-		products:this.state.products
+		products:newproducts
 	})
 	}
 	e.stopPropagation();
@@ -139,7 +142,48 @@ class FilterableProductTable extends React.Component {
 			modifyKey:key
 	})
 	}
-
+	
+  handleGotoPage(e){
+	this.setState({
+		currentPage:parseInt(e.target.value)
+	})
+  }
+  
+  handleClickPage(e){
+	if(e.target.id=="firstPage"&&e.target.className!="ban")
+	{
+		var page=0;
+		this.setState({
+		currentPage:page
+	})
+	}
+	else if(e.target.id=="prePage"&&e.target.className!="ban"){
+		var page=this.state.currentPage-1;
+		this.setState({
+		currentPage:page
+	})
+	}
+	else if(e.target.id=="nextPage"&&e.target.className!="ban"){
+		var page=this.state.currentPage+1;
+		console.log(page)
+		this.setState({
+		currentPage:page
+	})
+	}
+	else if(e.target.id=="lastPage"&&e.target.className!="ban"){
+		if(this.state.products.length/this.state.eachPage==parseInt(this.state.products.length/this.state.eachPage))
+			{
+				var page=parseInt(this.state.products.length/this.state.eachPage);
+			}
+		else
+			{
+				var page=Math.ceil(this.state.products.length/this.state.eachPage);
+			}
+		this.setState({
+		currentPage:page-1
+	})
+	}
+  }
   
   render() {
 	console.log("FilterableProductTable render");
@@ -165,6 +209,8 @@ class FilterableProductTable extends React.Component {
 		 filterText={this.state.filterText}
 		 Sort={this.state.Sort}
 		 inStockOnly={this.state.inStockOnly}
+		 currentPage={this.state.currentPage}
+		 eachPage={this.state.eachPage}
 		 handlerDelete={(e)=>this.handlerDelete(e)}
 		 handlerDetail={(e)=>this.handlerDetail(e)}
 		/>
@@ -181,6 +227,10 @@ class FilterableProductTable extends React.Component {
 		/>
 		<Paging
 		products={this.state.products}
+		currentPage={this.state.currentPage}
+		eachPage={this.state.eachPage}
+		handleGotoPage={(e)=>{this.handleGotoPage(e)}}
+		handleClickPage={(e)=>{this.handleClickPage(e)}}
 		/>
       </div>
     );

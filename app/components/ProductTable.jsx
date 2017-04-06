@@ -3,6 +3,10 @@ import ProductRow from './ProductRow.jsx';
 import ProductCategoryRow from './ProductCategoryRow.jsx';
 
 class ProductTable extends React.Component {
+  constructor(props){
+		super(props);
+  }
+  
   render() {
 	console.log("ProductTable render");
     let rows = [];
@@ -66,7 +70,15 @@ class ProductTable extends React.Component {
         //rows.push(<ProductCategoryRow category={product.category} key={product.category} />);
       }
       //rows.push(<ProductRow product={product} key={+new Date() + i} />);
-	  rows.push(<ProductRow product={product} key={product.name} handlerDetail={(e)=>{this.props.handlerDetail(e)}} handlerDelete={(e)=>this.props.handlerDelete(e)}/>);
+	  rows.push(<ProductRow product={product} 
+		index={i} 
+		currentPage={this.props.currentPage}
+		eachPage={this.props.eachPage}
+		key={product.name} 
+		Sort={this.props.Sort}
+		handlerDetail={(e)=>{this.props.handlerDetail(e)}} 
+		handlerDelete={(e)=>this.props.handlerDelete(e)}
+	   />);
 	  
 	  last=product.category
 	  categoryArray.push(product.category);
