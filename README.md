@@ -1,2 +1,2 @@
 # React-text
-关于React官网上的demon练习
+关于React官网上的demo练习

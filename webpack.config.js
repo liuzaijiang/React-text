@@ -1,9 +1,12 @@
-﻿
+﻿var webpack = require('webpack');
 module.exports = {
-    entry: __dirname + "/app/main.js",
+    entry: {
+		bundle:__dirname + "/app/main.js",
+		vendor:["react","react-dom"]
+		},
     output: {
         path: __dirname + "/build",
-        filename: "bundle.js"
+        filename: "[name].js"
     },
 	module: {
         loaders: [
@@ -13,6 +16,21 @@ module.exports = {
                 loader: 'babel-loader'
             }
         ]
-    }
-	
+    },
+	plugins: [
+		new webpack.optimize.UglifyJsPlugin({
+		output: {
+			comments: false,  // remove all comments
+		},
+		compress: {
+			warnings: false
+		}
+		}),
+		new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
+		new webpack.DefinePlugin({
+		'process.env': {
+		NODE_ENV: JSON.stringify('production')
+		}
+		}),
+    ]
 };

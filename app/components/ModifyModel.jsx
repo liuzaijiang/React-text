@@ -4,11 +4,14 @@
 class ModifyModel extends React.Component{
 	constructor(props){
 	super(props);
-	this.state={
-		isModify:this.props.isModify,
-		products:this.props.products
+   }
+	
+	shouldComponentUpdate(nextProps, nextState) {
+	  if (this.props.isModify !== nextProps.isModify) {
+		return true;
+		}
+	  return false;
 	}
-  }
 	
 	handleSubmitClick(e){
 		var newGoodObj={};
@@ -18,17 +21,14 @@ class ModifyModel extends React.Component{
 		newGoodObj.stocked=this.refs.modifyStock.checked;
 		let index=null;
 		
-		this.state.products.filter((product,i)=>{
+		this.props.products.filter((product,i)=>{
 			 if(product.name==this.props.modifyKey)
 				{
 					index=i;
 					return
 				}
 		 })
-		this.state.products.splice(index,1,newGoodObj);
-		this.setState({
-			products:this.state.products
-		})
+		this.props.products.splice(index,1,newGoodObj);
 		this.props.handleCloseClick(e);
 		e.stopPropagation();
 	}
@@ -41,11 +41,12 @@ class ModifyModel extends React.Component{
 	}
 	
 	render(){
+		console.log("ModifyModel render");
 		let isModify = this.props.isModify;  
 		if(!isModify)
         return null;
 		
-		let modifyProduct=this.state.products.filter(product=>{
+		let modifyProduct=this.props.products.filter(product=>{
 			return product.name==this.props.modifyKey
 		 }	
 		)

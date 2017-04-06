@@ -4,6 +4,7 @@ import ProductCategoryRow from './ProductCategoryRow.jsx';
 
 class ProductTable extends React.Component {
   render() {
+	console.log("ProductTable render");
     let rows = [];
     let lastCategory = null;
 	let length=this.props.products.length;

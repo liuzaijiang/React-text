@@ -1,7 +1,17 @@
 ﻿import React from 'react';
 
 class SearchBar extends React.Component {
+	
+	
+  shouldComponentUpdate(nextProps, nextState) {
+	  if (this.props.filterText !== nextProps.filterText) {
+		return true;
+		}
+	  return false;
+	}
+	
   render() {
+	console.log("SearchBar render");
     return (
 	<div>
       <form>

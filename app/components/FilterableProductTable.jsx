@@ -5,7 +5,7 @@ import ProductTable from './ProductTable.jsx';
 import AddGoods from './AddGoods.jsx';
 import PriceSort from './PriceSort.jsx';
 import SearchBar from './SearchBar.jsx';
-
+import Paging from './Paging.jsx';
 
 class FilterableProductTable extends React.Component {
   constructor(props){
@@ -66,6 +66,7 @@ class FilterableProductTable extends React.Component {
 	}
 	this.setState({
 		Sort:e.target.value,
+		products:this.state.products
 	})
   }
   
@@ -76,16 +77,46 @@ class FilterableProductTable extends React.Component {
   }
   
   handleCloseClick(e){
+	if(this.state.Sort==0){
+		for(var i=0;i<this.state.products.length;i++)
+		{
+			for(var j=i;j<this.state.products.length;j++)
+			{
+				if(this.state.products[i].price>this.state.products[j].price)
+				{
+					var tmp=this.state.products[i];
+					this.state.products[i]=this.state.products[j];
+					this.state.products[j]=tmp;
+				}
+			}
+		}
+	}
+	else{
+		for(var i=0;i<this.state.products.length;i++)
+		{
+			for(var j=i;j<this.state.products.length;j++)
+			{
+				if(this.state.products[i].price<this.state.products[j].price)
+				{
+					var tmp=this.state.products[i];
+					this.state.products[i]=this.state.products[j];
+					this.state.products[j]=tmp;
+				}
+			}
+		}
+	}
 	if(this.state.isAdd)
 	{
 	this.setState({
-		isAdd:false
+		isAdd:false,
+		products:this.state.products
 	})
 	}
 	else if(this.state.isModify)
 	{
 	this.setState({
-		isModify:false
+		isModify:false,
+		products:this.state.products
 	})
 	}
 	e.stopPropagation();
@@ -111,6 +142,7 @@ class FilterableProductTable extends React.Component {
 
   
   render() {
+	console.log("FilterableProductTable render");
     return (
       <div className="containerDiv">
         <SearchBar 
@@ -146,6 +178,9 @@ class FilterableProductTable extends React.Component {
 		isModify={this.state.isModify}
 		handleCloseClick={(e)=>this.handleCloseClick(e)}
 		modifyKey={this.state.modifyKey}
+		/>
+		<Paging
+		products={this.state.products}
 		/>
       </div>
     );

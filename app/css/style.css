@@ -78,6 +78,7 @@ body,html {
 .addForm label{
 	text-align: center;
 }
+
 .addForm input, .addForm select, .addForm textarea{
 	width: 200px;
 	margin: 0 auto 10px auto;
@@ -103,31 +104,18 @@ body,html {
 .overLay {
 	text-align: center;
 	z-index: 100;
-    position: absolute;
+    position: fixed;
 	left: 0;
 	top: 0;
 	right: 0;
 	bottom: 0;
-	
-	border:10px solid #1e90ff;
+	border:5px solid #1e90ff;
 	background-color: rgba(255, 255, 255, 0);
 	animation-name: detailMerge;
 	animation-duration: 0.4s;
 	animation-fill-mode: forwards;
 }
-.overLay table {
-	width: 100%;
-}
-.overLay tr {
-	line-height: 1.5em;
-}
-.overLay th {
-	width: 40%;
-}
-.overLay td {
-	width: 60%;
-	text-align: center;
-}
+
 .overLay input, .overLay select, .overLay textarea {
 	width: 200px;
 }
@@ -155,5 +143,55 @@ body,html {
 	}
 	to {
 		background-color: rgba(255, 255, 255, 0.95);
-	}	
+	}
+}
+/*add by liuzj 分页*/
+.barcon {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.barcon1 {
+    font-size: 17px;
+    float: left;
+    margin-top: 20px;
+}
+
+.barcon2 {
+    float: right;
+}
+
+.barcon2 ul {
+    margin: 20px 0;
+    padding-left: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.barcon2 li {
+    display: inline;
+}
+
+.barcon2 a {
+    font-size: 16px;
+    font-weight: normal;
+    display: inline-block;
+    padding: 5px;
+    padding-top: 0;
+    color: black;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.barcon2 a:hover{
+    background-color: #eee;
+}
+
+.ban {
+    opacity: .4;
+}
+
+
+
+	
 }

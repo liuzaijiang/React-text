@@ -5,7 +5,15 @@ class PriceSort extends React.Component{
 	super(props);
   }
   
+  shouldComponentUpdate(nextProps, nextState) {
+	  if (this.props.Sort !== nextProps.Sort) {
+		return true;
+		}
+	  return false;
+	}
+
   render(){
+	console.log("PriceSort render");
 	return(
 		<div>
 			<span className="myspan">价格排序</span>

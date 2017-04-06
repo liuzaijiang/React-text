@@ -3,10 +3,6 @@
 class AddModel extends React.Component{
 	constructor(props){
 	super(props);
-	this.state={
-		isAdd:this.props.isAdd,
-		products:this.props.products
-	}
   }
 	
 	handleSubmitClick(e){
@@ -15,13 +11,19 @@ class AddModel extends React.Component{
 		newGoodObj.name=this.refs.addName.value;
 		newGoodObj.price=this.refs.addPrice.value;
 		newGoodObj.stocked=this.refs.addStock.checked;
-		this.state.products.push(newGoodObj);
+		this.props.products.push(newGoodObj);
 		this.props.handleCloseClick(e);
 		e.stopPropagation();
 	}
 	
-	
+	shouldComponentUpdate(nextProps, nextState) {
+	  if (this.props.isAdd !== nextProps.isAdd) {
+		return true;
+		}
+	  return false;
+	}
 	render(){
+		console.log("AddModel render");
 		let isAdd = this.props.isAdd;  
 		if(!isAdd)
         return null;

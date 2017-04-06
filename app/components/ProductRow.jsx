@@ -5,7 +5,18 @@ class ProductRow extends React.Component {
 		super(props);
 	}
 
-  render() {
+	shouldComponentUpdate(nextProps, nextState) {
+	  if (this.props.hasGoods !== nextProps.hasGoods) {
+		return true;
+		}
+	if (this.props.product !== nextProps.product) {
+		return true;
+		}
+	  return false;
+	}
+	
+    render() {
+	console.log("ProductRow render");
 	if(this.props.hasGoods==0)
 	{
 		return <tr><th className="td" colSpan="4" >No Goods</th></tr>
