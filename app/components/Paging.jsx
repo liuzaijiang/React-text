@@ -12,6 +12,9 @@ class Paging extends React.Component{
 	  if (this.props.currentPage !== nextProps.currentPage) {
 		return true;
 		}
+	  if (this.props.isAdd !== nextProps.isAdd) {
+		return true;
+		}
 	  return false;
 	}
 

@@ -7,6 +7,9 @@ class SearchBar extends React.Component {
 	  if (this.props.filterText !== nextProps.filterText) {
 		return true;
 		}
+	if (this.props.inStockOnly !== nextProps.inStockOnly) {
+		return true;
+		}
 	  return false;
 	}
 	
