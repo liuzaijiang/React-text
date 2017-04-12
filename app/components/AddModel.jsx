@@ -3,6 +3,9 @@
 class AddModel extends React.Component{
 	constructor(props){
 	super(props);
+	this.state={
+		price:"",
+	}
   }
 	
 	handleSubmitClick(e){
@@ -16,12 +19,24 @@ class AddModel extends React.Component{
 		e.stopPropagation();
 	}
 	
+	keyUp(e){
+		var rgExp = new RegExp(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/);
+		if(rgExp.test(e.target.value))
+		{
+			//var help=""
+		}
+		else{
+			//var help="输入错误"
+		}
+	}
+	
 	shouldComponentUpdate(nextProps, nextState) {
 	  if (this.props.isAdd !== nextProps.isAdd) {
 		return true;
 		}
-	  return false;
+		return false
 	}
+	
 	render(){
 		console.log("AddModel render");
 		let isAdd = this.props.isAdd;  

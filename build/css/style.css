@@ -1,0 +1,237 @@
+﻿.table{
+	border:#C8C8C8 solid;   
+	border-width:1px 0px 0px 1px; 
+	background: #F3F0F0;
+	margin-top:25px;
+}
+		
+.td{
+	width:95px;
+	border:#C8C8C8 solid;   
+	border-width:0 1px 1px 0 ;
+}
+	
+.table tr:hover{
+		background-color:#e4e4e4;
+}
+		
+.myspan{
+	margin-right:8px;
+}
+		
+body,html {
+	font-family: '微软雅黑';
+}
+
+.containerDiv{
+	padding:10px;
+	border:8px #9fe1ee solid;
+	border-radius:8px;
+	background-color:#eff;
+}
+
+#app{
+	width: 600px;
+	margin: 100px auto;
+	position:  relative;
+}
+
+/* header */
+.optHeader {
+	margin: 30px 0;
+}
+.headerTd {
+	width: 33%;
+	text-align: center;
+}
+.optHeader select {
+	width: 5em;
+}
+
+.itemPanel {
+	width: 100%;
+	border: 2px solid #b0c4de;
+	border-radius: 4px;
+	margin-bottom: 100px;
+}
+.itemTd {
+	width: 20%;
+	line-height: 1.5em;
+	text-align: center;
+}
+.itemBtn {
+	width: 3em;
+	font-size: 80%;
+	color: #1e90ff;
+	display: inline-block;
+}
+
+.itemBtn:hover{
+	cursor:pointer;
+}
+.tempEmpty {
+	line-height: 1.5em;
+	background: #dcdcdc;
+}
+
+/* addForm */
+.addForm label{
+	text-align: center;
+}
+
+.addForm input, .addForm select, .addForm textarea{
+	width: 200px;
+	margin: 0 auto 10px auto;
+	display: block;
+}
+.addForm button {
+	padding: 3px 20px;
+	background-color: #1e90ff;
+	color: white;
+	font-weight: bold;
+	border-radius: 4px;
+	margin: 5px auto;
+	display: block;
+}
+
+.tips {
+	display: none;
+	color: #708090;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.overLay {
+	text-align: center;
+	z-index: 100;
+    position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	border:5px solid #1e90ff;
+	background-color: rgba(255, 255, 255, 0);
+	animation-name: detailMerge;
+	animation-duration: 0.4s;
+	animation-fill-mode: forwards;
+}
+
+.overLay input, .overLay select, .overLay textarea {
+	width: 200px;
+}
+.overLay button {
+	padding: 3px 20px;
+	background-color: #1e90ff;
+	color: white;
+	font-weight: bold;
+	border-radius: 4px;
+	margin: 5px auto;
+	display: inline-block;
+}
+
+@keyframes detailMerge {
+	from {
+		background-color: rgba(255, 255, 255, 0);
+	}
+	to {
+		background-color: rgba(255, 255, 255, 0.95);
+	}
+}
+@-webkit-keyframes detailMerge {
+	from {
+		background-color: rgba(255, 255, 255, 0);
+	}
+	to {
+		background-color: rgba(255, 255, 255, 0.95);
+	}
+}
+/*add by liuzj 分页*/
+.barcon {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.barcon1 {
+    font-size: 17px;
+    float: left;
+    margin-top: 20px;
+}
+
+.barcon2 {
+    float: right;
+}
+
+.barcon2 ul {
+    margin: 20px 0;
+    padding-left: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.barcon2 li {
+    display: inline;
+}
+
+.barcon2 a {
+    font-size: 16px;
+    font-weight: normal;
+    display: inline-block;
+    padding: 5px;
+    padding-top: 0;
+    color: black;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.barcon2 a:hover{
+    background-color: #eee;
+}
+
+.ban {
+    opacity: .4;
+}
+
+/*校验*/
+.tip {
+            position: relative;
+            background-color: deepskyblue;
+            margin: 20px auto;
+            width: 120px;
+            height: 23px;
+            line-height: 23px;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            font-family: sans-serif;
+        }
+        .tip:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 5px solid;
+        }
+        .top:after {
+            border-bottom-color: deepskyblue;
+            left: 60%;
+            bottom: 100%;
+            margin-left: -15px;
+        }
+        .right:after {
+            border-left-color: deepskyblue;
+            left: 100%;
+            top: 50%;
+            margin-top: -7px;
+        }
+        .bottom:after {
+            border-top-color: deepskyblue;
+            top: 100%;
+            left: 50%;
+            margin-left: -15px;
+        }
+        .left:after {
+            border-right-color: deepskyblue;
+            top: 50%;
+            right: 100%;
+            margin-top: -9px;
+        }

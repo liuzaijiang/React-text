@@ -10,7 +10,7 @@ class PriceSort extends React.Component{
 		return true;
 		}
 	  return false;
-	}
+	} 
 
   render(){
 	console.log("PriceSort render");

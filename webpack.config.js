@@ -5,8 +5,9 @@ module.exports = {
 		vendor:["react","react-dom"]
 		},
     output: {
-        path: __dirname + "/build",
-        filename: "[name].js"
+        path: __dirname + "/build/js",
+        filename: "[name].js",
+		publicPath: 'js/'
     },
 	module: {
         loaders: [
