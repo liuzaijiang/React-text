@@ -9,9 +9,6 @@ class ProductRow extends React.Component {
 	  if (this.props.hasGoods !== nextProps.hasGoods) {
 		return true;
 		}
-	  if (this.props.product !== nextProps.product) {
-		return true;
-		}
 	  if (this.props.currentPage !== nextProps.currentPage) {
 		return true;
 		}
